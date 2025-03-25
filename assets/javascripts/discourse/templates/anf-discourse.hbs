@@ -1,0 +1,64 @@
+<div class="anf-discourse-dashboard">
+  <div class="dashboard-header">
+    <h2>{{i18n "anf_discourse.title"}}</h2>
+    <div class="dashboard-time">{{serverTime}}</div>
+  </div>
+  
+  <div class="dashboard-content">
+    <div class="dashboard-card user-card">
+      <div class="card-icon">
+        {{d-icon "user" class="user-icon"}}
+      </div>
+      <div class="card-content">
+        <h3>{{i18n "anf_discourse.user_info"}}</h3>
+        {{#if currentUser}}
+          <div class="user-name">{{currentUser}}</div>
+          <div class="user-status online">{{i18n "anf_discourse.logged_in"}}</div>
+        {{else}}
+          <div class="user-status offline">{{i18n "anf_discourse.not_logged_in"}}</div>
+          <div class="login-suggestion">{{i18n "anf_discourse.login_suggestion"}}</div>
+        {{/if}}
+      </div>
+    </div>
+    
+    <div class="dashboard-card time-card">
+      <div class="card-icon">
+        {{d-icon "clock" class="time-icon"}}
+      </div>
+      <div class="card-content">
+        <h3>{{i18n "anf_discourse.server_time"}}</h3>
+        <div class="time-display">
+          {{serverTime}}
+        </div>
+        <div class="time-info">{{i18n "anf_discourse.server_time"}}</div>
+      </div>
+    </div>
+    
+    <div class="dashboard-card stat-card">
+      <div class="card-icon">
+        {{d-icon "chart-bar" class="stat-icon"}}
+      </div>
+      <div class="card-content">
+        <h3>{{i18n "anf_discourse.statistics"}}</h3>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-label">{{i18n "anf_discourse.daily_visits"}}</span>
+            <span class="stat-value">{{dailyVisits}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">{{i18n "anf_discourse.total_users"}}</span>
+            <span class="stat-value">{{totalUsers}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">{{i18n "anf_discourse.online_users"}}</span>
+            <span class="stat-value">{{onlineUsers}}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">{{i18n "anf_discourse.new_messages"}}</span>
+            <span class="stat-value">{{newMessages}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

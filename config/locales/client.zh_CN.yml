@@ -1,0 +1,14 @@
+zh_CN:
+  js:
+    anf_discourse:
+      title: "ANF 仪表盘"
+      user_info: "用户信息"
+      server_time: "服务器时间"
+      statistics: "统计信息"
+      daily_visits: "今日访问"
+      total_users: "总用户"
+      online_users: "在线用户"
+      new_messages: "新消息"
+      logged_in: "已登录"
+      not_logged_in: "未登录"
+      login_suggestion: "请登录以获取更多功能" 
