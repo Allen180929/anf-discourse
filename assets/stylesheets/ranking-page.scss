@@ -1,0 +1,226 @@
+/* 版本: 1.0.1 - 强制刷新缓存 */
+.repository-dashboard {
+  font-family: var(--font-family);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1em 0;
+}
+
+.repo-header {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.repo-header h2 {
+  font-size: 1.75em;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+  color: var(--primary);
+}
+
+.repo-header p {
+  color: var(--primary-medium);
+  margin: 0;
+  font-size: 1em;
+}
+
+.navigation-container {
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid var(--primary-low);
+}
+
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+  margin-bottom: 0;
+}
+
+.category-tab {
+  margin-bottom: 0;
+  border-radius: 4px 4px 0 0 !important;
+  border: 1px solid transparent;
+  border-bottom: none;
+}
+
+.category-tab.active {
+  background-color: var(--tertiary-low);
+  color: var(--tertiary);
+  font-weight: bold;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.category-header h3 {
+  font-size: 1.25em;
+  font-weight: 500;
+  margin: 0;
+  color: var(--primary);
+}
+
+.period-selector {
+  display: flex;
+  gap: 0.5em;
+}
+
+.period-btn {
+  padding: 0.5em 0.75em;
+}
+
+.period-btn.active {
+  background-color: var(--tertiary-low);
+  color: var(--tertiary);
+  font-weight: bold;
+}
+
+.repo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5em;
+  border: 1px solid var(--primary-low);
+}
+
+.repo-table th {
+  text-align: left;
+  padding: 0.75em;
+  background-color: var(--primary-very-low);
+  border-bottom: 1px solid var(--primary-low);
+  color: var(--primary-high);
+}
+
+.repo-table td {
+  padding: 0.75em;
+  border-bottom: 1px solid var(--primary-low);
+  color: var(--primary);
+}
+
+.repo-name {
+  font-weight: 500;
+  margin-bottom: 0.25em;
+}
+
+.repo-name a {
+  color: var(--tertiary);
+}
+
+.repo-name a:hover {
+  text-decoration: underline;
+}
+
+.repo-desc {
+  color: var(--primary-medium);
+  font-size: 0.875em;
+}
+
+.rank-cell {
+  text-align: center;
+  font-weight: 500;
+}
+
+.positive {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.negative {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3em !important;
+}
+
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.empty-state-icon {
+  font-size: 2.5em;
+  color: var(--primary-low-mid);
+}
+
+.empty-state-text {
+  color: var(--primary-medium);
+  font-size: 1.1em;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5em;
+}
+
+.items-per-page span {
+  margin-right: 0.5em;
+  color: var(--primary-medium);
+}
+
+.items-per-page-selector {
+  min-width: 5em;
+}
+
+.page-info {
+  margin-right: 1.5em;
+  color: var(--primary-medium);
+}
+
+.page-buttons {
+  display: flex;
+  gap: 0.25em;
+}
+
+/* 响应式布局 */
+@media (width <= 768px) {
+  .category-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+
+  .items-per-page,
+  .page-info {
+    margin-right: 0;
+  }
+
+  .page-buttons {
+    align-self: flex-end;
+  }
+}
+
+@media (width <= 480px) {
+  .category-tabs {
+    flex-direction: column;
+  }
+
+  .repo-table th:nth-child(4),
+  .repo-table td:nth-child(4) {
+    display: none;
+  }
+
+  .pagination-controls {
+    width: 100%;
+  }
+}

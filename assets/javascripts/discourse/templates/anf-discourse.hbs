@@ -1,64 +1,140 @@
-<div class="anf-discourse-dashboard">
-  <div class="dashboard-header">
-    <h2>{{i18n "anf_discourse.title"}}</h2>
-    <div class="dashboard-time">{{serverTime}}</div>
+<div class="repository-dashboard">
+  {{! 调试信息 }}
+  <div
+    class="debug-info"
+    style="margin-bottom: 10px; color: #666; font-size: 12px;"
+  >
+    当前类别ID:
+    {{this.currentCategoryId}}
+    | 类别数量:
+    {{this.categories.length}}
+    | 当前类别名称:
+    {{this.currentCategoryName}}
+    | 数据项数量:
+    {{this.currentRepos.length}}
+    | 数据已加载:
+    {{this.dataLoaded}}
   </div>
-  
-  <div class="dashboard-content">
-    <div class="dashboard-card user-card">
-      <div class="card-icon">
-        {{d-icon "user" class="user-icon"}}
+
+  <div class="repo-header">
+    <h2>{{i18n "repo_ranking.title"}}</h2>
+    <p>{{i18n "repo_ranking.last_28_days_desc"}}</p>
+  </div>
+
+  <div class="navigation-container">
+    <div class="category-tabs">
+      {{#each this.categories as |category|}}
+        <button
+          class="btn btn-flat category-tab
+            {{if (eq category.id this.currentCategoryId) 'active'}}"
+          {{on "click" (fn this.selectCategory category.id)}}
+        >
+          {{category.name}}
+        </button>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="repo-content">
+    <div class="category-header">
+      <h3>{{this.currentCategoryName}}</h3>
+      <div class="period-selector">
+        <button
+          class="btn btn-flat period-btn
+            {{if (eq this.currentPeriod 'last-28-days') 'active'}}"
+          {{on "click" (fn this.selectPeriod "last-28-days")}}
+        >
+          {{i18n "repo_ranking.periods.last_28_days"}}
+        </button>
+        <button
+          class="btn btn-flat period-btn
+            {{if (eq this.currentPeriod 'last-7-days') 'active'}}"
+          {{on "click" (fn this.selectPeriod "last-7-days")}}
+        >
+          {{i18n "repo_ranking.periods.last_7_days"}}
+        </button>
+        <button
+          class="btn btn-flat period-btn
+            {{if (eq this.currentPeriod 'last-24-hours') 'active'}}"
+          {{on "click" (fn this.selectPeriod "last-24-hours")}}
+        >
+          {{i18n "repo_ranking.periods.last_24_hours"}}
+        </button>
       </div>
-      <div class="card-content">
-        <h3>{{i18n "anf_discourse.user_info"}}</h3>
-        {{#if currentUser}}
-          <div class="user-name">{{currentUser}}</div>
-          <div class="user-status online">{{i18n "anf_discourse.logged_in"}}</div>
+    </div>
+
+    <table class="repo-table">
+      <thead>
+        <tr>
+          <th>{{i18n "repo_ranking.rank"}}</th>
+          <th>{{i18n "repo_ranking.repository"}}</th>
+          <th>{{i18n "repo_ranking.star_increase"}}</th>
+          <th>{{i18n "repo_ranking.total_stars"}}</th>
+          <th>{{i18n "repo_ranking.growth_rate"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.currentRepos as |repo|}}
+          <tr>
+            <td class="rank-cell">{{repo.rank}}</td>
+            <td>
+              <div class="repo-name">
+                <a href="https://github.com/{{repo.name}}" target="_blank">
+                  {{repo.name}}
+                </a>
+              </div>
+              <div class="repo-desc">{{repo.description}}</div>
+            </td>
+            <td>{{repo.starIncrease}}</td>
+            <td>{{this.formatNumber repo.totalStars}}</td>
+            <td class="{{if repo.growthIsPositive 'positive' 'negative'}}">
+              {{if repo.growthIsPositive "↑" "↓"}}
+              {{repo.growthRate}}%
+            </td>
+          </tr>
         {{else}}
-          <div class="user-status offline">{{i18n "anf_discourse.not_logged_in"}}</div>
-          <div class="login-suggestion">{{i18n "anf_discourse.login_suggestion"}}</div>
+          <tr>
+            <td colspan="5" class="empty-state">
+              <div class="empty-state-container">
+                <span class="empty-state-icon">📊</span>
+                <div class="empty-state-text">{{i18n
+                    "repo_ranking.empty_state"
+                  }}</div>
+              </div>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <div class="pagination-controls">
+      <div class="items-per-page">
+        <span>{{i18n "repo_ranking.items_per_page"}}</span>
+        <select
+          onchange={{action (mut this.itemsPerPage) value="target.value"}}
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+      <div class="page-info">
+        {{#if this.currentRepos.length}}
+          1-{{this.currentRepos.length}}
+          {{i18n "repo_ranking.of"}}
+          {{this.currentRepos.length}}
+        {{else}}
+          0-0
+          {{i18n "repo_ranking.of"}}
+          0
         {{/if}}
       </div>
-    </div>
-    
-    <div class="dashboard-card time-card">
-      <div class="card-icon">
-        {{d-icon "clock" class="time-icon"}}
-      </div>
-      <div class="card-content">
-        <h3>{{i18n "anf_discourse.server_time"}}</h3>
-        <div class="time-display">
-          {{serverTime}}
-        </div>
-        <div class="time-info">{{i18n "anf_discourse.server_time"}}</div>
-      </div>
-    </div>
-    
-    <div class="dashboard-card stat-card">
-      <div class="card-icon">
-        {{d-icon "chart-bar" class="stat-icon"}}
-      </div>
-      <div class="card-content">
-        <h3>{{i18n "anf_discourse.statistics"}}</h3>
-        <div class="stat-grid">
-          <div class="stat-item">
-            <span class="stat-label">{{i18n "anf_discourse.daily_visits"}}</span>
-            <span class="stat-value">{{dailyVisits}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">{{i18n "anf_discourse.total_users"}}</span>
-            <span class="stat-value">{{totalUsers}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">{{i18n "anf_discourse.online_users"}}</span>
-            <span class="stat-value">{{onlineUsers}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">{{i18n "anf_discourse.new_messages"}}</span>
-            <span class="stat-value">{{newMessages}}</span>
-          </div>
-        </div>
+      <div class="page-buttons">
+        <button class="btn-mini" disabled>«</button>
+        <button class="btn-mini" disabled>‹</button>
+        <button class="btn-mini" disabled>›</button>
+        <button class="btn-mini" disabled>»</button>
       </div>
     </div>
   </div>
-</div> 
+</div>
